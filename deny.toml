@@ -50,4 +50,7 @@ wildcards = "allow"
 [sources]
 unknown-registry = "deny"
 unknown-git = "allow"
-allow-git = ["https://github.com/Roberdan/convergio-sdk"]
+allow-git = [
+    "https://github.com/Roberdan/convergio-sdk",
+    "https://github.com/Roberdan/convergio-db",
+]

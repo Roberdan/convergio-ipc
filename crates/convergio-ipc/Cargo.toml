@@ -7,6 +7,8 @@ license.workspace = true
 
 [dependencies]
 convergio-types = { workspace = true }
+convergio-telemetry = { workspace = true }
+convergio-db = { workspace = true }
 thiserror = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
@@ -14,3 +16,13 @@ tokio = { workspace = true }
 tracing = { workspace = true }
 axum = { workspace = true }
 chrono = { workspace = true }
+rusqlite = { workspace = true }
+r2d2 = { workspace = true }
+uuid = { workspace = true }
+reqwest = { workspace = true }
+async-stream = { workspace = true }
+futures-core = { workspace = true }
+libc = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
