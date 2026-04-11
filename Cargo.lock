@@ -228,7 +228,7 @@ version = "0.1.0"
 source = "git+https://github.com/Roberdan/convergio-db?tag=v0.1.0#849c0661e1896484d9822825595631b9f2b38438"
 dependencies = [
  "axum",
- "convergio-types",
+ "convergio-types 0.1.4",
  "r2d2",
  "r2d2_sqlite",
  "rusqlite",
@@ -244,7 +244,7 @@ dependencies = [
  "chrono",
  "convergio-db",
  "convergio-telemetry",
- "convergio-types",
+ "convergio-types 0.1.4",
  "futures-core",
  "libc",
  "r2d2",
@@ -260,10 +260,10 @@ dependencies = [
 
 [[package]]
 name = "convergio-telemetry"
-version = "0.1.4"
-source = "git+https://github.com/Roberdan/convergio-sdk?tag=convergio-sdk-v0.1.4#2f13cdc9ded028e32f39be687e23a9b093001b13"
+version = "0.1.6"
+source = "git+https://github.com/Roberdan/convergio-sdk?tag=convergio-sdk-v0.1.6#175aaec0da0e1fe3f6d1384ca0c6d259c12db268"
 dependencies = [
- "convergio-types",
+ "convergio-types 0.1.6",
  "serde",
  "serde_json",
  "tracing",
@@ -275,6 +275,19 @@ dependencies = [
 name = "convergio-types"
 version = "0.1.4"
 source = "git+https://github.com/Roberdan/convergio-sdk?tag=convergio-sdk-v0.1.4#2f13cdc9ded028e32f39be687e23a9b093001b13"
+dependencies = [
+ "axum",
+ "chrono",
+ "dirs",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "convergio-types"
+version = "0.1.6"
+source = "git+https://github.com/Roberdan/convergio-sdk?tag=convergio-sdk-v0.1.6#175aaec0da0e1fe3f6d1384ca0c6d259c12db268"
 dependencies = [
  "axum",
  "chrono",
@@ -432,7 +445,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -1431,7 +1444,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -1736,7 +1749,7 @@ dependencies = [
  "getrandom 0.4.2",
  "once_cell",
  "rustix",
- "windows-sys 0.61.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
