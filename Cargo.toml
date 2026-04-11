@@ -3,18 +3,18 @@ resolver = "2"
 members = ["crates/convergio-ipc"]
 
 [workspace.package]
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 license = "LicenseRef-Convergio-Community"
 repository = "https://github.com/Roberdan/convergio-ipc"
 
 [workspace.dependencies]
 # SDK dependencies
-convergio-types = { git = "https://github.com/Roberdan/convergio-sdk", tag = "convergio-sdk-v0.1.4" }
-convergio-telemetry = { git = "https://github.com/Roberdan/convergio-sdk", tag = "convergio-sdk-v0.1.4" }
+convergio-types = { git = "https://github.com/Roberdan/convergio-sdk", tag = "convergio-sdk-v0.1.6" }
+convergio-telemetry = { git = "https://github.com/Roberdan/convergio-sdk", tag = "convergio-sdk-v0.1.6" }
 
 # Standalone extracted crates
-convergio-db = { git = "https://github.com/Roberdan/convergio-db", tag = "v0.1.0" }
+convergio-db = { git = "https://github.com/Roberdan/convergio-db", tag = "v0.1.2" }
 
 # Common deps — pin same versions as SDK for compatibility
 thiserror = "1"
