@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.2](https://github.com/Roberdan/convergio-ipc/compare/convergio-ipc-v0.1.1...convergio-ipc-v0.1.2) (2026-04-12)
+
+
+### Bug Fixes
+
+* security audit — race condition, PID overflow, UTF-8 panic, input validation ([#5](https://github.com/Roberdan/convergio-ipc/issues/5)) ([56fb2ce](https://github.com/Roberdan/convergio-ipc/commit/56fb2ce574909f1d811092c21e9f3498799d9039))
+
+
+### Documentation
+
+* copy ADR from monorepo ([4dade46](https://github.com/Roberdan/convergio-ipc/commit/4dade46b36c7b5abc29f63e8af5a0cdb7172d2d8))
+
 ## [0.1.1](https://github.com/Roberdan/convergio-ipc/compare/convergio-ipc-v0.1.0...convergio-ipc-v0.1.1) (2026-04-11)
 
 
