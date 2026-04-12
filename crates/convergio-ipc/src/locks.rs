@@ -11,7 +11,9 @@ pub fn acquire(
     pid: i64,
 ) -> IpcResult<AcquireResult> {
     let conn = pool.get()?;
+    // SECURITY: use IMMEDIATE to prevent TOCTOU race between SELECT and INSERT
     let tx = conn.unchecked_transaction()?;
+    tx.execute_batch("END; BEGIN IMMEDIATE;")?;
 
     let existing: Option<FileLock> = tx
         .query_row(
@@ -89,7 +91,15 @@ pub fn prune_dead(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
 fn is_pid_alive(pid: i64) -> bool {
     #[cfg(unix)]
     {
-        unsafe { libc::kill(pid as i32, 0) == 0 }
+        // SECURITY: guard against overflow — PIDs beyond i32 range are invalid
+        let Ok(pid_i32) = i32::try_from(pid) else {
+            return false;
+        };
+        if pid_i32 <= 0 {
+            return false;
+        }
+        // SAFETY: kill(pid, 0) only checks process existence, sends no signal
+        unsafe { libc::kill(pid_i32, 0) == 0 }
     }
     #[cfg(not(unix))]
     {

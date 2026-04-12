@@ -119,7 +119,15 @@ pub fn prune_dead_pids(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
 fn is_pid_alive(pid: u32) -> bool {
     #[cfg(unix)]
     {
-        unsafe { libc::kill(pid as i32, 0) == 0 }
+        // SECURITY: guard against overflow — PIDs beyond i32 range are invalid
+        let Ok(pid_i32) = i32::try_from(pid) else {
+            return false;
+        };
+        if pid_i32 <= 0 {
+            return false;
+        }
+        // SAFETY: kill(pid, 0) only checks process existence, sends no signal
+        unsafe { libc::kill(pid_i32, 0) == 0 }
     }
     #[cfg(not(unix))]
     {
