@@ -195,7 +195,14 @@ fn truncate(s: &str, max: usize) -> String {
     if s.len() <= max {
         s.to_string()
     } else {
-        format!("{}...", &s[..max])
+        // SECURITY: find char boundary to avoid panic on multi-byte UTF-8
+        let boundary = s
+            .char_indices()
+            .take_while(|(i, _)| *i < max)
+            .last()
+            .map(|(i, c)| i + c.len_utf8())
+            .unwrap_or(0);
+        format!("{}...", &s[..boundary])
     }
 }
 
@@ -281,5 +288,14 @@ mod tests {
     fn extract_model_from_cmd() {
         let m = extract_model_name("omlx serve --model-dir /models/qwen3.5-27b --port 8321");
         assert_eq!(m, "qwen3.5-27b");
+    }
+
+    #[test]
+    fn truncate_respects_utf8_boundaries() {
+        let s = "hello 🌍 world";
+        let t = truncate(s, 8);
+        // Should not panic; cuts before the 4-byte emoji at byte index 6
+        assert!(t.ends_with("..."));
+        assert!(t.len() <= 14);
     }
 }

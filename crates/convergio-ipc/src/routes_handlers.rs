@@ -11,6 +11,24 @@ use crate::sse::create_sse_stream;
 
 use super::IpcState;
 
+// ── Input validation limits ──────────────────────
+const MAX_AGENT_NAME: usize = 128;
+const MAX_CONTENT: usize = 65_536;
+const MAX_KEY: usize = 256;
+const MAX_VALUE: usize = 65_536;
+const MAX_MSG_TYPE: usize = 64;
+const MAX_METADATA: usize = 4_096;
+
+fn validate_len(field: &str, value: &str, max: usize) -> Result<(), String> {
+    if value.len() > max {
+        return Err(format!("{field} exceeds max length ({max})"));
+    }
+    if value.trim().is_empty() {
+        return Err(format!("{field} must not be empty"));
+    }
+    Ok(())
+}
+
 pub async fn handle_status(State(state): State<Arc<IpcState>>) -> Json<serde_json::Value> {
     let conn = match state.pool.get() {
         Ok(c) => c,
@@ -111,6 +129,18 @@ pub async fn handle_send(
     State(state): State<Arc<IpcState>>,
     Json(body): Json<SendRequest>,
 ) -> Json<serde_json::Value> {
+    if let Err(e) = validate_len("from", &body.from, MAX_AGENT_NAME) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Err(e) = validate_len("to", &body.to, MAX_AGENT_NAME) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Err(e) = validate_len("content", &body.content, MAX_CONTENT) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Err(e) = validate_len("msg_type", &body.msg_type, MAX_MSG_TYPE) {
+        return Json(serde_json::json!({"error": e}));
+    }
     let params = crate::messaging::SendParams {
         from: &body.from,
         to: &body.to,
@@ -156,6 +186,12 @@ pub async fn handle_context_set(
     State(state): State<Arc<IpcState>>,
     Json(body): Json<ContextSetRequest>,
 ) -> Json<serde_json::Value> {
+    if let Err(e) = validate_len("key", &body.key, MAX_KEY) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Err(e) = validate_len("value", &body.value, MAX_VALUE) {
+        return Json(serde_json::json!({"error": e}));
+    }
     match crate::channels::context_set(&state.pool, &body.key, &body.value, &body.set_by) {
         Ok(()) => Json(serde_json::json!({"ok": true})),
         Err(e) => Json(serde_json::json!({"error": e.to_string()})),
@@ -166,6 +202,17 @@ pub async fn handle_register_agent(
     State(state): State<Arc<IpcState>>,
     Json(body): Json<RegisterAgentRequest>,
 ) -> Json<serde_json::Value> {
+    if let Err(e) = validate_len("name", &body.name, MAX_AGENT_NAME) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Err(e) = validate_len("agent_type", &body.agent_type, MAX_MSG_TYPE) {
+        return Json(serde_json::json!({"error": e}));
+    }
+    if let Some(ref m) = body.metadata {
+        if let Err(e) = validate_len("metadata", m, MAX_METADATA) {
+            return Json(serde_json::json!({"error": e}));
+        }
+    }
     let host = body.host.unwrap_or_else(super::local_hostname);
     match crate::agents::register(
         &state.pool,
