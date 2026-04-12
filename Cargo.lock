@@ -279,11 +279,11 @@ dependencies = [
 
 [[package]]
 name = "convergio-db"
-version = "0.1.2"
-source = "git+https://github.com/Roberdan/convergio-db?tag=convergio-db-v0.1.2#6f92816037f66d131ea6b7ad8808a1aaabfe4319"
+version = "0.1.3"
+source = "git+https://github.com/Roberdan/convergio-db?tag=convergio-db-v0.1.3#5dbfda6a7c64207202f776a80b2344fa011a7ba0"
 dependencies = [
  "axum",
- "convergio-types 0.1.7",
+ "convergio-types",
  "r2d2",
  "r2d2_sqlite",
  "rusqlite",
@@ -299,7 +299,7 @@ dependencies = [
  "chrono",
  "convergio-db",
  "convergio-telemetry",
- "convergio-types 0.1.9",
+ "convergio-types",
  "futures-core",
  "libc",
  "r2d2",
@@ -318,25 +318,12 @@ name = "convergio-telemetry"
 version = "0.1.9"
 source = "git+https://github.com/Roberdan/convergio-sdk?tag=v0.1.9#ccbc95bb56a3a8e78fb713214f3f8b8ea9341f5a"
 dependencies = [
- "convergio-types 0.1.9",
+ "convergio-types",
  "serde",
  "serde_json",
  "tracing",
  "tracing-appender",
  "tracing-subscriber",
-]
-
-[[package]]
-name = "convergio-types"
-version = "0.1.7"
-source = "git+https://github.com/Roberdan/convergio-sdk?tag=v0.1.7#8d9c143cd5a6c16be5eb274cc09b2540307b620a"
-dependencies = [
- "axum",
- "chrono",
- "dirs",
- "serde",
- "serde_json",
- "thiserror 1.0.69",
 ]
 
 [[package]]
