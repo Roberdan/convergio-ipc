@@ -10,8 +10,8 @@ repository = "https://github.com/Roberdan/convergio-ipc"
 
 [workspace.dependencies]
 # SDK dependencies
-convergio-types = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.7" }
-convergio-telemetry = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.7" }
+convergio-types = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.9" }
+convergio-telemetry = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.9" }
 
 # Standalone extracted crates
 convergio-db = { git = "https://github.com/Roberdan/convergio-db", tag = "v0.1.3" }
