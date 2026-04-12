@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/Roberdan/convergio-ipc/compare/convergio-ipc-v0.1.2...convergio-ipc-v0.1.3) (2026-04-12)
+
+
+### Bug Fixes
+
+* align SDK dependency to v0.1.9 for type compatibility ([b6565da](https://github.com/Roberdan/convergio-ipc/commit/b6565da133c5189b7005b68bbc69046ede559edf))
+
 ## [0.1.2](https://github.com/Roberdan/convergio-ipc/compare/convergio-ipc-v0.1.1...convergio-ipc-v0.1.2) (2026-04-12)
 
 
