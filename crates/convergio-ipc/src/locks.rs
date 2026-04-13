@@ -77,7 +77,7 @@ pub fn prune_dead(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
         if lock.host != local_host {
             continue;
         }
-        if !is_pid_alive(lock.pid) {
+        if !crate::utils::is_pid_alive(lock.pid) {
             conn.execute(
                 "DELETE FROM ipc_file_locks WHERE file_path = ?1 AND locked_by = ?2 AND host = ?3",
                 params![lock.file_path, lock.locked_by, lock.host],
@@ -86,26 +86,6 @@ pub fn prune_dead(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
         }
     }
     Ok(pruned)
-}
-
-fn is_pid_alive(pid: i64) -> bool {
-    #[cfg(unix)]
-    {
-        // SECURITY: guard against overflow — PIDs beyond i32 range are invalid
-        let Ok(pid_i32) = i32::try_from(pid) else {
-            return false;
-        };
-        if pid_i32 <= 0 {
-            return false;
-        }
-        // SAFETY: kill(pid, 0) only checks process existence, sends no signal
-        unsafe { libc::kill(pid_i32, 0) == 0 }
-    }
-    #[cfg(not(unix))]
-    {
-        let _ = pid;
-        true
-    }
 }
 
 fn map_lock(row: &rusqlite::Row<'_>) -> rusqlite::Result<FileLock> {

@@ -16,6 +16,7 @@ pub mod schema;
 pub mod skills;
 pub mod sse;
 pub mod types;
+pub mod utils;
 pub mod websocket;
 
 pub use ext::IpcExtension;

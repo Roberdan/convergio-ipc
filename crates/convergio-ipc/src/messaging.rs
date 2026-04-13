@@ -75,9 +75,11 @@ pub fn receive(
     let sql = format!(
         "SELECT id, from_agent, to_agent, channel, content, msg_type, created_at
          FROM ipc_messages WHERE {} AND read_at IS NULL
-         ORDER BY created_at ASC LIMIT {limit}",
-        conditions.join(" AND ")
+         ORDER BY created_at ASC LIMIT ?{}",
+        conditions.join(" AND "),
+        p.len() + 1
     );
+    p.push(Box::new(limit));
     let refs: Vec<&dyn rusqlite::types::ToSql> = p.iter().map(|v| v.as_ref()).collect();
     let mut stmt = tx.prepare(&sql)?;
     let rows: Vec<(String, MessageInfo)> = stmt
@@ -164,8 +166,10 @@ pub fn history(
     };
     let sql = format!(
         "SELECT id, from_agent, to_agent, channel, content, msg_type, created_at
-         FROM ipc_messages {where_cl} ORDER BY created_at DESC LIMIT {limit}"
+         FROM ipc_messages {where_cl} ORDER BY created_at DESC LIMIT ?{}",
+        p.len() + 1
     );
+    p.push(Box::new(limit));
     let refs: Vec<&dyn rusqlite::types::ToSql> = p.iter().map(|v| v.as_ref()).collect();
     let mut stmt = conn.prepare(&sql)?;
     let msgs = stmt

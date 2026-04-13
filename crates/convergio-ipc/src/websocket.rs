@@ -34,6 +34,9 @@ struct WsServerMsg {
     content: Option<String>,
 }
 
+/// Max inbound WebSocket message size (64 KiB).
+const MAX_WS_MSG_BYTES: usize = 65_536;
+
 /// Handle an upgraded WebSocket connection.
 pub async fn handle_ws(mut socket: WebSocket, bus: Arc<EventBus>) {
     let mut rx = bus.subscribe();
@@ -46,6 +49,9 @@ pub async fn handle_ws(mut socket: WebSocket, bus: Arc<EventBus>) {
             maybe_msg = socket.recv() => {
                 match maybe_msg {
                     Some(Ok(Message::Text(text))) => {
+                        if text.len() > MAX_WS_MSG_BYTES {
+                            continue;
+                        }
                         if let Ok(msg) = serde_json::from_str::<WsClientMsg>(&text) {
                             match msg.msg_type.as_str() {
                                 "subscribe" => {

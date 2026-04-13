@@ -102,7 +102,7 @@ pub fn prune_dead_pids(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
         if host != local_host {
             continue;
         }
-        if !is_pid_alive(*pid) {
+        if !crate::utils::is_pid_alive(*pid as i64) {
             conn.execute(
                 "DELETE FROM ipc_agents WHERE name = ?1 AND host = ?2",
                 params![name, host],
@@ -114,26 +114,6 @@ pub fn prune_dead_pids(pool: &ConnPool, local_host: &str) -> IpcResult<usize> {
         tracing::info!(count = pruned, "pruned dead-PID agents");
     }
     Ok(pruned)
-}
-
-fn is_pid_alive(pid: u32) -> bool {
-    #[cfg(unix)]
-    {
-        // SECURITY: guard against overflow — PIDs beyond i32 range are invalid
-        let Ok(pid_i32) = i32::try_from(pid) else {
-            return false;
-        };
-        if pid_i32 <= 0 {
-            return false;
-        }
-        // SAFETY: kill(pid, 0) only checks process existence, sends no signal
-        unsafe { libc::kill(pid_i32, 0) == 0 }
-    }
-    #[cfg(not(unix))]
-    {
-        let _ = pid;
-        true
-    }
 }
 
 #[cfg(test)]
