@@ -279,20 +279,22 @@ dependencies = [
 
 [[package]]
 name = "convergio-db"
-version = "0.1.3"
-source = "git+https://github.com/Roberdan/convergio-db?tag=convergio-db-v0.1.3#5dbfda6a7c64207202f776a80b2344fa011a7ba0"
+version = "0.1.9"
+source = "git+https://github.com/Roberdan/convergio-sdk?tag=v0.1.9#ccbc95bb56a3a8e78fb713214f3f8b8ea9341f5a"
 dependencies = [
- "axum",
+ "chrono",
  "convergio-types",
  "r2d2",
  "r2d2_sqlite",
  "rusqlite",
+ "serde",
+ "serde_json",
  "tracing",
 ]
 
 [[package]]
 name = "convergio-ipc"
-version = "0.1.4"
+version = "0.1.5"
 dependencies = [
  "async-stream",
  "axum",
@@ -1564,9 +1566,9 @@ checksum = "94300abf3f1ae2e2b8ffb7b58043de3d399c73fa6f4b73826402a5c457614dbe"
 
 [[package]]
 name = "rustls"
-version = "0.23.37"
+version = "0.23.38"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "758025cb5fccfd3bc2fd74708fd4682be41d99e5dff73c377c0646c6012c73a4"
+checksum = "69f9466fb2c14ea04357e91413efb882e2a6d4a406e625449bc0a5d360d53a21"
 dependencies = [
  "aws-lc-rs",
  "once_cell",
