@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/Roberdan/convergio-ipc/compare/v0.1.5...v0.1.6) (2026-04-13)
+
+
+### Bug Fixes
+
+* **deps:** use convergio-db from SDK instead of standalone repo ([f552b88](https://github.com/Roberdan/convergio-ipc/commit/f552b8839dec80cd6b7bd68498fd2ff69736aa27))
+
 ## [0.1.5](https://github.com/Roberdan/convergio-ipc/compare/v0.1.4...v0.1.5) (2026-04-13)
 
 
