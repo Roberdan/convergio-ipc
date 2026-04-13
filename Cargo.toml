@@ -10,11 +10,11 @@ repository = "https://github.com/Roberdan/convergio-ipc"
 
 [workspace.dependencies]
 # SDK dependencies
-convergio-types = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.9", version = "0.1" }
-convergio-telemetry = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.9", version = "0.1" }
+convergio-types = "0.1"
+convergio-telemetry = "0.1"
 
 # Standalone extracted crates
-convergio-db = { git = "https://github.com/Roberdan/convergio-sdk", tag = "v0.1.9", version = "0.1" }
+convergio-db = "0.1"
 
 # Common deps — pin same versions as SDK for compatibility
 thiserror = "1"
