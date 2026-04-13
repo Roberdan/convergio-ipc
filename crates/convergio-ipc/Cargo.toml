@@ -4,6 +4,7 @@ description = "Message bus, SSE event streaming, agent registry"
 version = "0.1.6"
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 
 [dependencies]
 convergio-types = { workspace = true }
