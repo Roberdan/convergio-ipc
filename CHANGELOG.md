@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.8](https://github.com/Roberdan/convergio-ipc/compare/v0.1.7...v0.1.8) (2026-04-13)
+
+
+### Features
+
+* add GET /api/ipc/receive — long-poll endpoint for async agent messaging ([af4315e](https://github.com/Roberdan/convergio-ipc/commit/af4315ed0c4880ca7cbf5ccfa8c65f3e380f5543))
+
+
+### Bug Fixes
+
+* security audit pass  parameterize SQL LIMIT, dedup utils, WS size guard2 ([f47313f](https://github.com/Roberdan/convergio-ipc/commit/f47313fa40daca8ab493f54a1bc9423466b0137b))
+
 ## [0.1.7](https://github.com/Roberdan/convergio-ipc/compare/v0.1.6...v0.1.7) (2026-04-13)
 
 
