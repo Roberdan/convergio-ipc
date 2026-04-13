@@ -9,6 +9,7 @@
 //! - GET  /api/ipc/stream   — SSE event stream (query: agent filter)
 //! - GET  /api/events/stream — SSE event stream (legacy path)
 //! - POST /api/ipc/send     — send a direct message
+//! - GET  /api/ipc/receive  — long-poll: blocks until a message arrives (or timeout)
 
 #[path = "routes_handlers.rs"]
 mod routes_handlers;
@@ -49,6 +50,10 @@ pub fn ipc_routes(state: Arc<IpcState>) -> Router {
         .route("/api/ipc/stream", get(routes_handlers::handle_stream))
         .route("/api/ws/agent-chat", get(ws_agent_chat_handler))
         .route("/api/ipc/send", post(routes_handlers::handle_send))
+        .route(
+            "/api/ipc/receive",
+            get(routes_handlers::handle_receive_wait),
+        )
         .route(
             "/api/ipc/agents/register",
             post(routes_handlers::handle_register_agent),

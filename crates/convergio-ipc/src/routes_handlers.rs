@@ -155,6 +155,43 @@ pub async fn handle_send(
     }
 }
 
+/// Long-poll: blocks until a message arrives for this agent (or timeout).
+/// GET /api/ipc/receive?agent=opus-arch&from=opus-monitor&timeout=60
+pub async fn handle_receive_wait(
+    State(state): State<Arc<IpcState>>,
+    Query(q): Query<ReceiveWaitQuery>,
+) -> Json<serde_json::Value> {
+    let agent = match q.agent {
+        Some(a) if !a.is_empty() => a,
+        _ => return Json(serde_json::json!({"error": "agent query param required"})),
+    };
+    let timeout = q.timeout.unwrap_or(30).min(300);
+    let limit = q.limit.unwrap_or(10).min(50);
+    match crate::messaging::receive_wait(
+        &state.pool,
+        &state.notify,
+        &agent,
+        q.from.as_deref(),
+        q.channel.as_deref(),
+        limit,
+        timeout,
+    )
+    .await
+    {
+        Ok(msgs) => Json(serde_json::json!({"messages": msgs})),
+        Err(e) => Json(serde_json::json!({"error": e.to_string()})),
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct ReceiveWaitQuery {
+    pub agent: Option<String>,
+    pub from: Option<String>,
+    pub channel: Option<String>,
+    pub timeout: Option<u64>,
+    pub limit: Option<u32>,
+}
+
 #[derive(Debug, Deserialize)]
 pub struct RegisterAgentRequest {
     pub name: String,
