@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/Roberdan/convergio-ipc/compare/v0.1.6...v0.1.7) (2026-04-13)
+
+
+### Bug Fixes
+
+* pass CARGO_REGISTRY_TOKEN to release workflow ([f40a24d](https://github.com/Roberdan/convergio-ipc/commit/f40a24dcc18d63771b7f71f32607047e329a70f5))
+
 ## [0.1.6](https://github.com/Roberdan/convergio-ipc/compare/v0.1.5...v0.1.6) (2026-04-13)
 
 
