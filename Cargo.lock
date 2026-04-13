@@ -295,7 +295,7 @@ dependencies = [
 
 [[package]]
 name = "convergio-ipc"
-version = "0.1.7"
+version = "0.1.8"
 dependencies = [
  "async-stream",
  "axum",
