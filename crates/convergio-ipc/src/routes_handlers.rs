@@ -155,6 +155,13 @@ pub async fn handle_send(
     }
 }
 
+/// Wake up all long-poll receivers — called by mesh sync when ipc_messages arrive.
+/// POST /api/ipc/notify-sync
+pub async fn handle_notify_sync(State(state): State<Arc<IpcState>>) -> Json<serde_json::Value> {
+    state.notify.notify_waiters();
+    Json(serde_json::json!({"ok": true}))
+}
+
 /// Long-poll: blocks until a message arrives for this agent (or timeout).
 /// GET /api/ipc/receive?agent=opus-arch&from=opus-monitor&timeout=60
 pub async fn handle_receive_wait(

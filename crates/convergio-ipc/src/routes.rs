@@ -55,6 +55,10 @@ pub fn ipc_routes(state: Arc<IpcState>) -> Router {
             get(routes_handlers::handle_receive_wait),
         )
         .route(
+            "/api/ipc/notify-sync",
+            post(routes_handlers::handle_notify_sync),
+        )
+        .route(
             "/api/ipc/agents/register",
             post(routes_handlers::handle_register_agent),
         )
