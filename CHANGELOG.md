@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/Roberdan/convergio-ipc/compare/v0.1.8...v0.1.9) (2026-04-14)
+
+
+### Features
+
+* add /api/ipc/notify-sync for mesh wake-up ([b781e20](https://github.com/Roberdan/convergio-ipc/commit/b781e20aec9d52a385cc16a2debdf8732e34888c))
+
 ## [0.1.8](https://github.com/Roberdan/convergio-ipc/compare/v0.1.7...v0.1.8) (2026-04-13)
 
 
